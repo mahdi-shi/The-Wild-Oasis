@@ -1,12 +1,20 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+import { IoHomeOutline } from "react-icons/io5";
+import { SlNotebook } from "react-icons/sl";
+import { MdOutlineBedroomParent } from "react-icons/md";
+import { RiAccountCircleLine } from "react-icons/ri";
+import { IoSettingsOutline } from "react-icons/io5";
+import { LuUsers } from "react-icons/lu";
 
 const NavList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  margin-top: 20px;
 `;
 
-const Link = styled.a`
+const StyledNavLink = styled(NavLink)`
   &:link,
   &:visited {
     display: flex;
@@ -44,3 +52,48 @@ const Link = styled.a`
     color: var(--color-brand-600);
   }
 `;
+
+function MainNav() {
+  return (
+    <nav>
+      <NavList>
+        <li>
+          <StyledNavLink to={"/dashboard"}>
+            <IoHomeOutline />
+            <span>Home</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to={"/bookings"}>
+            <SlNotebook />
+            <span>Bookings</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to={"/cabins"}>
+            <MdOutlineBedroomParent /> <span>Cabins</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to={"/account"}>
+            <RiAccountCircleLine />
+            <span>Account</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to={"/users"}>
+            <LuUsers /> <span>Users</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to={"/settings"}>
+            <IoSettingsOutline />
+            <span>Settings</span>
+          </StyledNavLink>
+        </li>
+      </NavList>
+    </nav>
+  );
+}
+
+export default MainNav;
