@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 import GlobalStyled from "./styles/GlobalStyled";
 import Dashboard from "./pages/Dashboard";
@@ -55,7 +55,10 @@ function App() {
           },
           style : {
             fontSize : "16px",
-            
+            maxWidth : "500px",
+            padding : "16px 24px",
+            backgroundColor : "var(--color-grey-0)",
+            color : "var(--color-grey-700)"
           }
         }}
       />

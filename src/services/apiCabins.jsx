@@ -21,3 +21,17 @@ export async function deleteCabin(id) {
 
   return data;
 }
+
+export async function insertCabin(newCabin) {
+  const { data, error } = await supabase
+    .from("Cabin")
+    .insert([newCabin])
+    .select();
+    
+  if (error) {
+    console.log(error);
+    throw new error(error);
+  }
+
+  return data;
+}
