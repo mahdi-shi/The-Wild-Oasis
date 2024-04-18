@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-
 const FormRow = styled.div`
   display: grid;
   align-items: center;
