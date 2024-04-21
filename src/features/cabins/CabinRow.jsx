@@ -5,6 +5,9 @@ import Spinner from "../../ui/Spinner";
 import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
 import useDeleteCabin from "./useDeleteCabin";
+import { HiPencil, HiTrash } from "react-icons/hi";
+import { HiSquare2Stack } from "react-icons/hi2";
+import useInsertCabin from "./useInsertCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -46,6 +49,8 @@ const Discount = styled.div`
 `;
 
 export default function CabinRow({ cabin }) {
+  const { insertCabin } = useInsertCabin();
+
   const {
     id: cabinId,
     name,
@@ -53,7 +58,20 @@ export default function CabinRow({ cabin }) {
     regularPrice,
     discount,
     image,
+    description,
   } = cabin;
+
+  function duplicateCabin() {
+    insertCabin({
+      name: `Copy of ${name}`,
+      cabinId,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
+  }
 
   const [showForm, setShowForm] = useState(false);
 
@@ -71,8 +89,15 @@ export default function CabinRow({ cabin }) {
         <Price>{formatCurrency(regularPrice)}</Price>
         <Discount>{formatCurrency(discount)}</Discount>
         <div>
-          <button onClick={() => setShowForm((show) => !show)}>Edit</button>
-          <button onClick={() => deleteCabin(cabinId)}>Delete</button>
+          <button onClick={() => setShowForm((show) => !show)}>
+            <HiPencil />
+          </button>
+          <button onClick={duplicateCabin}>
+            <HiSquare2Stack />
+          </button>
+          <button onClick={() => deleteCabin(cabinId)}>
+            <HiTrash />
+          </button>
         </div>
       </TableRow>
       {showForm && <CreateCabinForm cabinToEdit={cabin} />}

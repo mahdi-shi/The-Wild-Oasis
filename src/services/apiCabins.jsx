@@ -24,7 +24,7 @@ export async function deleteCabin(id) {
 }
 
 export async function insertEditCabin(newCabin, id) {
-  console.log(newCabin,id);
+  console.log(newCabin, id);
 
   const hasImagePath = newCabin.image?.startWith?.(supabaseUrl);
 
@@ -52,6 +52,8 @@ export async function insertEditCabin(newCabin, id) {
     console.log(error);
     throw new error(error);
   }
+
+  if (hasImagePath) return data;
 
   const { error: storageError } = await supabase.storage
     .from("cabin-images")
