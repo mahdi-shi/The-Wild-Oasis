@@ -5,11 +5,9 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import Input from "../../ui/Inputs";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { insertEditCabin } from "../../services/apiCabins";
-import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 import useInsertCabin from "./useInsertCabin";
+import useEditCabin from "./useEditCabin";
 
 function CreateCabinForm({ cabinToEdit }) {
   const { id: editId, ...editValues } = cabinToEdit;
@@ -19,21 +17,9 @@ function CreateCabinForm({ cabinToEdit }) {
     defaultValues: isEditSession ? editValues : {},
   });
   const { errors } = formState;
-  const queryClient = useQueryClient();
 
   const { insertCabin, isInserting } = useInsertCabin();
-
-  const { mutate: editCabin, isLoading: isEditing } = useMutation({
-    mutationFn: ({ cabinToEdit, editId }) =>
-      insertEditCabin(cabinToEdit, editId),
-    onSuccess: () => {
-      toast.success("You edited a cabin in the list");
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-      reset();
-    },
-  });
+  const { isEditing, editCabin } = useEditCabin();
 
   const isWorking = isInserting || isEditing;
 
@@ -41,7 +27,14 @@ function CreateCabinForm({ cabinToEdit }) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
     if (isEditSession) {
-      editCabin({ ...data, image: image });
+      editCabin(
+        { ...data, image: image },
+        {
+          onSuccess: () => {
+            reset();
+          },
+        }
+      );
     } else {
       insertCabin(
         { ...data, image: image },
