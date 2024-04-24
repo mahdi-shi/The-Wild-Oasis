@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import useInsertCabin from "./useInsertCabin";
 import useEditCabin from "./useEditCabin";
 
-function CreateCabinForm({ cabinToEdit }) {
+function CreateCabinForm({ cabinToEdit = {}, onCLoseModal }) {
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
 
@@ -32,6 +32,7 @@ function CreateCabinForm({ cabinToEdit }) {
         {
           onSuccess: () => {
             reset();
+            () => onCLoseModal?.();
           },
         }
       );
@@ -41,6 +42,7 @@ function CreateCabinForm({ cabinToEdit }) {
         {
           onSuccess: () => {
             reset();
+            () => onCLoseModal?.();
           },
         }
       );
@@ -52,7 +54,7 @@ function CreateCabinForm({ cabinToEdit }) {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form onSubmit={handleSubmit(onSubmit, onError)} type={onCLoseModal ? "modal" : "regular"}>
       <RowForm lable={"Cabin name"} error={errors?.name?.message}>
         <Input
           type="text"
@@ -134,7 +136,12 @@ function CreateCabinForm({ cabinToEdit }) {
 
       <RowForm>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" disabled={isWorking} type="reset">
+        <Button
+          variation="secondary"
+          disabled={isWorking}
+          type="reset"
+          onClick={() => onCLoseModal?.()}
+        >
           Cancel
         </Button>
         <Button>{isEditSession ? "Edit Cabin" : "Create Cabin"}</Button>
@@ -147,4 +154,5 @@ export default CreateCabinForm;
 
 CreateCabinForm.propTypes = {
   cabinToEdit: PropTypes.node,
+  onCLoseModal: PropTypes.node,
 };
