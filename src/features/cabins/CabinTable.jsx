@@ -1,10 +1,10 @@
-import styled from "styled-components";
-
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import useCabin from "./useCabin";
+import Table from "../../ui/Table";
+import Menus from "../../ui/Menus";
 
-const Table = styled.div`
+/*const Table = styled.div`
   border: 1px solid var(--color-grey-200);
 
   font-size: 1.4rem;
@@ -26,7 +26,7 @@ const TableHeader = styled.header`
   font-weight: 600;
   color: var(--color-grey-600);
   padding: 1.6rem 2.4rem;
-`;
+`;*/
 
 export default function CabinTable() {
   const { isLoading, cabins, error } = useCabin();
@@ -40,18 +40,21 @@ export default function CabinTable() {
   }
 
   return (
-    <Table role="table">
-      <TableHeader role="row">
-        <div></div>
-        <div>Cabins</div>
-        <div>Capacity</div>
-        <div>Price</div>
-        <div>Discount</div>
-        <div></div>
-      </TableHeader>
-      {cabins.map((cabin) => (
-        <CabinRow cabin={cabin} key={cabin.id} />
-      ))}
-    </Table>
+    <Menus>
+      <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
+        <Table.Header>
+          <div></div>
+          <div>Cabins</div>
+          <div>Capacity</div>
+          <div>Price</div>
+          <div>Discount</div>
+          <div></div>
+        </Table.Header>
+        <Table.Body
+          data={cabins}
+          render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />}
+        />
+      </Table>
+    </Menus>
   );
 }
