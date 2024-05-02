@@ -13,6 +13,7 @@ function useInsertCabin() {
         queryKey: ["cabins"],
       });
     },
+    onError: (err) => toast.error(err.message),
   });
 
   return {insertCabin, isInserting};

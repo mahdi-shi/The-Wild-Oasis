@@ -107,7 +107,6 @@ function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext);
 
   const ref = useCloseModal(close);
-  console.log(ref);
   if (openId !== id) return null;
 
   return createPortal(

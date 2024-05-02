@@ -51,7 +51,7 @@ const Discount = styled.div`
 `;
 
 export default function CabinRow({ cabin }) {
-  const { insertCabin } = useInsertCabin();
+  const { insertCabin,isInserting } = useInsertCabin();
 
   const {
     id: cabinId,
@@ -64,6 +64,7 @@ export default function CabinRow({ cabin }) {
   } = cabin;
 
   function duplicateCabin() {
+
     insertCabin({
       name: `Copy of ${name}`,
       cabinId,
@@ -77,9 +78,10 @@ export default function CabinRow({ cabin }) {
 
   const { isDeleting, deleteCabin } = useDeleteCabin();
 
-  if (isDeleting) {
+  if (isDeleting || isInserting) {
     return <Spinner />;
   }
+
   return (
     <TableRow>
       <Img src={image} />
@@ -107,7 +109,7 @@ export default function CabinRow({ cabin }) {
             </Menus.List>
 
             <Modal.Window name={"update"}>
-              <CreateCabinForm cabinToEdit={cabin} />
+              <CreateCabinForm cabinToEdit={cabin} onCLoseModal={true} />
             </Modal.Window>
 
             <Modal.Window name={"delete"}>
