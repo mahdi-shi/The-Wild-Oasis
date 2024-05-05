@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
 import useInsertCabin from "./useInsertCabin";
 import useEditCabin from "./useEditCabin";
+import Spinner from "../../ui/Spinner";
 
 function CreateCabinForm({ cabinToEdit = {}, onCLoseModal }) {
   const { id: editId, ...editValues } = cabinToEdit;
@@ -22,6 +23,8 @@ function CreateCabinForm({ cabinToEdit = {}, onCLoseModal }) {
   const { isEditing, editCabin } = useEditCabin();
 
   const isWorking = isInserting || isEditing;
+
+  console.log(isWorking,isInserting,isEditing);
 
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
@@ -40,8 +43,8 @@ function CreateCabinForm({ cabinToEdit = {}, onCLoseModal }) {
         { newCabinData: { ...data, image: image }, id: editId },
         {
           onSuccess: () => {
+            onCLoseModal?.();
             reset();
-            () => onCLoseModal?.();
           },
         }
       );
@@ -50,8 +53,8 @@ function CreateCabinForm({ cabinToEdit = {}, onCLoseModal }) {
         { ...data, image: image },
         {
           onSuccess: () => {
+            onCLoseModal?.();
             reset();
-            () => onCLoseModal?.();
           },
         }
       );
@@ -61,105 +64,111 @@ function CreateCabinForm({ cabinToEdit = {}, onCLoseModal }) {
   function onError(error) {
     console.log(error);
   }
+  if (isWorking) {
+    return <Spinner />;
+  } else {
+    return (
+      <Form
+        onSubmit={handleSubmit(onSubmit, onError)}
+        type={onCLoseModal ? "modal" : "regular"}
+      >
+        <RowForm lable={"Cabin name"} error={errors?.name?.message}>
+          <Input
+            type="text"
+            id="name"
+            disabled={isWorking}
+            {...register("name", {
+              required: "this field is required",
+            })}
+          />
+        </RowForm>
 
-  return (
-    <Form
-      onSubmit={handleSubmit(onSubmit, onError)}
-      type={onCLoseModal ? "modal" : "regular"}
-    >
-      <RowForm lable={"Cabin name"} error={errors?.name?.message}>
-        <Input
-          type="text"
-          id="name"
-          disabled={isWorking}
-          {...register("name", {
-            required: "this field is required",
-          })}
-        />
-      </RowForm>
-
-      <RowForm lable={"Maximum capacity"} error={errors?.maxCapacity?.message}>
-        <Input
-          type="number"
-          id="maxCapacity"
-          disabled={isWorking}
-          {...register("maxCapacity", {
-            required: "this field is required",
-            min: {
-              value: 1,
-              message: "Capacity should be at least 1",
-            },
-          })}
-        />
-      </RowForm>
-
-      <RowForm lable={"Regular price"} error={errors?.regularPrice?.message}>
-        <Input
-          type="number"
-          id="regularPrice"
-          disabled={isWorking}
-          {...register("regularPrice", {
-            required: "this field is required",
-            min: {
-              value: 1,
-              message: "Price should be at least 1",
-            },
-          })}
-        />
-      </RowForm>
-
-      <RowForm lable={"Discount"} error={errors?.discount?.message}>
-        <Input
-          type="number"
-          id="discount"
-          disabled={isWorking}
-          defaultValue={0}
-          {...register("discount", {
-            required: "this field is required",
-            validate: (value) =>
-              Number(value) <= Number(getValues().regularPrice) ||
-              "Discount should be less than price",
-          })}
-        />
-      </RowForm>
-
-      <RowForm lable={"Description"} error={errors?.description?.message}>
-        <Textarea
-          type="number"
-          id="description"
-          disabled={isWorking}
-          defaultValue=""
-          {...register("description", {
-            required: "this field is required",
-          })}
-        />
-      </RowForm>
-
-      <RowForm lable={"Cabin photo"}>
-        <FileInput
-          id="image"
-          disabled={isWorking}
-          accept="image/*"
-          {...register("image", {
-            required: isEditSession ? false : "this field is required",
-          })}
-        />
-      </RowForm>
-
-      <RowForm>
-        {/* type is an HTML attribute! */}
-        <Button
-          variation="secondary"
-          disabled={isWorking}
-          type="reset"
-          onClick={() => onCLoseModal?.()}
+        <RowForm
+          lable={"Maximum capacity"}
+          error={errors?.maxCapacity?.message}
         >
-          Cancel
-        </Button>
-        <Button>{isEditSession ? "Edit Cabin" : "Create Cabin"}</Button>
-      </RowForm>
-    </Form>
-  );
+          <Input
+            type="number"
+            id="maxCapacity"
+            disabled={isWorking}
+            {...register("maxCapacity", {
+              required: "this field is required",
+              min: {
+                value: 1,
+                message: "Capacity should be at least 1",
+              },
+            })}
+          />
+        </RowForm>
+
+        <RowForm lable={"Regular price"} error={errors?.regularPrice?.message}>
+          <Input
+            type="number"
+            id="regularPrice"
+            disabled={isWorking}
+            {...register("regularPrice", {
+              required: "this field is required",
+              min: {
+                value: 1,
+                message: "Price should be at least 1",
+              },
+            })}
+          />
+        </RowForm>
+
+        <RowForm lable={"Discount"} error={errors?.discount?.message}>
+          <Input
+            type="number"
+            id="discount"
+            disabled={isWorking}
+            defaultValue={0}
+            {...register("discount", {
+              required: "this field is required",
+              validate: (value) =>
+                Number(value) <= Number(getValues().regularPrice) ||
+                "Discount should be less than price",
+            })}
+          />
+        </RowForm>
+
+        <RowForm lable={"Description"} error={errors?.description?.message}>
+          <Textarea
+            type="number"
+            id="description"
+            disabled={isWorking}
+            defaultValue=""
+            {...register("description", {
+              required: "this field is required",
+            })}
+          />
+        </RowForm>
+
+        <RowForm lable={"Cabin photo"}>
+          <FileInput
+            id="image"
+            disabled={isWorking}
+            accept="image/*"
+            {...register("image", {
+              required: isEditSession ? false : "this field is required",
+            })}
+          />
+        </RowForm>
+
+        <RowForm>
+          {/* type is an HTML attribute! */}
+          <Button
+            variation="secondary"
+            disabled={isWorking}
+            type="reset"
+            onClick={() => onCLoseModal?.()}
+          >
+            Cancel
+          </Button>
+          <Button disabled={isWorking}>{isEditSession ? "Edit Cabin" : "Create Cabin"}</Button>
+        </RowForm>
+      </Form>
+    );
+  }
 }
 
 export default CreateCabinForm;
