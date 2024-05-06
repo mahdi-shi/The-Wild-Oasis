@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -35,25 +36,35 @@ const FilterButton = styled.button`
   }
 `;
 
-function Filter() {
+function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const currentFiltered = searchParams.get(filterField) || options.at(0).value;
+  console.log(filterField);
+
   function onHandler(value) {
-    searchParams.set("discount", value);
+    searchParams.set(filterField, value);
     setSearchParams(searchParams);
   }
 
   return (
     <StyledFilter>
-      <FilterButton onClick={() => onHandler("all")}>All</FilterButton>
-      <FilterButton onClick={() => onHandler("no-discount")}>
-        No discount
-      </FilterButton>
-      <FilterButton onClick={() => onHandler("with-discount")}>
-        With discount
-      </FilterButton>
+      {options.map((option) => (
+        <FilterButton
+          key={option.value}
+          active={option.value === currentFiltered}
+          onClick={() => onHandler(option.value)}
+        >
+          {option.label}
+        </FilterButton>
+      ))}
     </StyledFilter>
   );
 }
 
 export default Filter;
+
+Filter.propTypes = {
+  filterField: PropTypes.node,
+  options: PropTypes.node,
+};
