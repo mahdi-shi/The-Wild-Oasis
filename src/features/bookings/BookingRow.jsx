@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
 
@@ -44,15 +45,17 @@ function BookingRow({
     numGuests,
     totalPrice,
     status,
-    guests: { fullName: guestName, email },
-    cabins: { name: cabinName },
+    guestID: { fullName: guestName, email },
+    cabinID: { name: cabinName },
   },
 }) {
   const statusToTagName = {
-    unconfirmed: "blue",
+    "unconfirmed" : "blue",
     "checked-in": "green",
     "checked-out": "silver",
   };
+
+  console.log(bookingId, created_at, numGuests, Cabin, cabinName);
 
   return (
     <Table.Row>
@@ -84,3 +87,7 @@ function BookingRow({
 }
 
 export default BookingRow;
+
+BookingRow.propTypes = {
+  booking: PropTypes.node,
+};

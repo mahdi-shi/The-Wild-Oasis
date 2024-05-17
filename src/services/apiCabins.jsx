@@ -3,7 +3,7 @@ import { supabaseUrl } from "./supabase";
 
 export async function getCabins() {
   let { data, error } = await supabase.from("Cabin").select("*");
-  
+
   if (error) {
     throw new error(error + "heh");
   }
@@ -23,13 +23,11 @@ export async function deleteCabin(id) {
 }
 
 export async function insertEditCabin(newCabin, id) {
-
   const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl) ? true : false;
 
-  const imageName = `${Math.random()}-${hasImagePath ? newCabin.image : newCabin.image.name}`.replaceAll(
-    "/",
-    ""
-  );
+  const imageName = `${Math.random()}-${
+    hasImagePath ? newCabin.image : newCabin.image.name
+  }`.replaceAll("/", "");
 
   const imagePath = hasImagePath
     ? newCabin.image
@@ -38,7 +36,6 @@ export async function insertEditCabin(newCabin, id) {
   //create/edit cabin
 
   let query = supabase.from("Cabin");
-
 
   //create
 

@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
-
   font-size: 1.4rem;
   background-color: var(--color-grey-0);
   border-radius: 7px;
@@ -13,7 +12,7 @@ const StyledTable = styled.div`
 
 const CommonRow = styled.div`
   display: grid;
-  grid-template-columns: ${(props) => props.columns};
+  grid-template-columns: 0.6fr 2fr 2.4fr 1.4fr 1fr 3.2rem;
   column-gap: 2.4rem;
   align-items: center;
   transition: none;
@@ -21,7 +20,6 @@ const CommonRow = styled.div`
 
 const StyledHeader = styled(CommonRow)`
   padding: 1.6rem 2.4rem;
-
   background-color: var(--color-grey-50);
   border-bottom: 1px solid var(--color-grey-100);
   text-transform: uppercase;
@@ -74,9 +72,11 @@ function Table({ columns, children }) {
 function Header({ children }) {
   const { columns } = useContext(TableContext);
 
-  <StyledHeader role="row" columns={columns}>
-    {children}
-  </StyledHeader>;
+  return (
+    <StyledHeader role="row" columns={columns}>
+      {children}
+    </StyledHeader>
+  );
 }
 function Body({ data, render }) {
   if (!data.length) return <Empty>No data to show at the moment!</Empty>;
@@ -86,9 +86,11 @@ function Body({ data, render }) {
 function Row({ children }) {
   const { columns } = useContext(TableContext);
 
-  <StyledRow role="row" columns={columns}>
-    {children}
-  </StyledRow>;
+  return (
+    <StyledRow role="row" columns={columns}>
+      {children}
+    </StyledRow>
+  );
 }
 
 Table.Header = Header;
@@ -104,6 +106,14 @@ Table.propTypes = {
 Body.propTypes = {
   data: PropTypes.node,
   render: PropTypes.node,
+};
+
+Header.propTypes = {
+  children: PropTypes.node,
+};
+
+Row.propTypes = {
+  children: PropTypes.node,
 };
 
 export default Table;

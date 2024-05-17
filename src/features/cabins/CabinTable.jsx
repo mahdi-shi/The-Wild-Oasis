@@ -4,6 +4,7 @@ import useCabin from "./useCabin";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
+import Empty from "../../ui/Empty";
 
 export default function CabinTable() {
   const { isLoading, cabins, error } = useCabin();
@@ -40,6 +41,8 @@ export default function CabinTable() {
     return <Spinner />;
   }
 
+  if(!sortedCabins)return <Empty sourceName={"cabin"} />
+
   if (error) {
     return <h2>{error}</h2>;
   }
@@ -47,14 +50,14 @@ export default function CabinTable() {
   return (
     <Menus>
       <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
-        <Table.Header>
-          <div></div>
-          <div>Cabins</div>
-          <div>Capacity</div>
-          <div>Price</div>
-          <div>Discount</div>
-          <div></div>
-        </Table.Header>
+      <Table.Header>
+        <div></div>
+        <div>Cabins</div>
+        <div>Capacity</div>
+        <div>Price</div>
+        <div>Discount</div>
+        <div></div>
+      </Table.Header>
         <Table.Body
           data={sortedCabins}
           render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />}
