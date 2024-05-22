@@ -41,21 +41,35 @@ function BookingRow({
     created_at,
     startDate,
     endDate,
+    hasBreakfast,
     numNights,
     numGuests,
+    observation,
     totalPrice,
+    isPaid,
     status,
     guestID: { fullName: guestName, email },
     cabinID: { name: cabinName },
   },
 }) {
   const statusToTagName = {
-    "unconfirmed" : "blue",
+    unconfirmed: "blue",
     "checked-in": "green",
     "checked-out": "silver",
   };
 
-  console.log(bookingId, created_at, numGuests, Cabin, cabinName);
+  console.log(
+    bookingId,
+    created_at,
+    numGuests,
+    isPaid,
+    Cabin,  
+    guestName,
+    email,
+    observation,
+    cabinName,
+    hasBreakfast
+  );
 
   return (
     <Table.Row>
