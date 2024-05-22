@@ -37,16 +37,10 @@ const Amount = styled.div`
 
 function BookingRow({
   booking: {
-    id: bookingId,
-    created_at,
     startDate,
     endDate,
-    hasBreakfast,
     numNights,
-    numGuests,
-    observation,
     totalPrice,
-    isPaid,
     status,
     guestID: { fullName: guestName, email },
     cabinID: { name: cabinName },
@@ -57,19 +51,6 @@ function BookingRow({
     "checked-in": "green",
     "checked-out": "silver",
   };
-
-  console.log(
-    bookingId,
-    created_at,
-    numGuests,
-    isPaid,
-    Cabin,  
-    guestName,
-    email,
-    observation,
-    cabinName,
-    hasBreakfast
-  );
 
   return (
     <Table.Row>
