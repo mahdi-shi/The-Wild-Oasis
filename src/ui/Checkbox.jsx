@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const StyledCheckbox = styled.div`
@@ -41,3 +42,11 @@ function Checkbox({ checked, onChange, disabled = false, id, children }) {
 }
 
 export default Checkbox;
+
+Checkbox.propTypes = {
+  checked: PropTypes.node,
+  onChange: PropTypes.node,
+  disabled: PropTypes.node,
+  id: PropTypes.node,
+  children: PropTypes.node,
+};

@@ -10,11 +10,12 @@ function useBooking() {
     data: booking,
     error,
   } = useQuery({
-    queryKey: ["booking"],
+    queryKey: ["booking",bookingID],
     queryFn: () => getBooking(bookingID),
     retry: false,
   });
 
+  console.log(booking);
 
   return { isLoading, booking, error };
 }
