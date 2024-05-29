@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
 import {
@@ -11,6 +12,7 @@ import DataItem from "../../ui/DataItem";
 import { Flag } from "../../ui/Flag";
 
 import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
+import Spinner from "../../ui/Spinner";
 
 const StyledBookingDataBox = styled.section`
   /* Box */
@@ -102,7 +104,7 @@ const Footer = styled.footer`
 `;
 
 // A purely presentational component
-function BookingDataBox({ booking }) {
+function BookingDataBox({ booking,isLoading }) {
   const {
     created_at,
     startDate,
@@ -115,9 +117,11 @@ function BookingDataBox({ booking }) {
     hasBreakfast,
     observations,
     isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
-    cabins: { name: cabinName },
+    guestID: { fullName: guestName, email, country, countryFlag, nationalID },
+    cabinID: { name: cabinName },
   } = booking;
+
+  if(isLoading) return <Spinner />
 
   return (
     <StyledBookingDataBox>
@@ -185,3 +189,8 @@ function BookingDataBox({ booking }) {
 }
 
 export default BookingDataBox;
+
+BookingDataBox.propTypes = {
+  booking: PropTypes.node,
+  isLoading : PropTypes.node,
+};
