@@ -11,8 +11,16 @@ import ButtonText from "../../ui/ButtonText";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import useBooking from "./useBooking";
 import Spinner from "../../ui/Spinner";
-import { HiArrowDownOnSquare } from "react-icons/hi2";
+import {
+  HiArrowDownOnSquare,
+  HiArrowUpOnSquare,
+  HiTrash,
+} from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { useCheckingOut } from "../check-in-out/useCheckingOut";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import useDeleteBooking from "./useDeleteBookings";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -26,14 +34,15 @@ function BookingDetail() {
   const moveBack = useMoveBack();
   const navigate = useNavigate();
 
-  if (isLoading) return <Spinner />;
-
   const statusToTagName = {
     unconfirmed: "blue",
     "checked-in": "green",
     "checked-out": "silver",
   };
+  const { isDeleting, deleteBooking } = useDeleteBooking();
+  const { checkingOut, isCheckingOut } = useCheckingOut();
 
+  if (isLoading) return <Spinner />;
   const { status, id: bookingId } = booking;
 
   return (
@@ -58,6 +67,33 @@ function BookingDetail() {
             onClick={() => navigate(`/checkin/${bookingId}`)}
           >
             check in
+          </Button>
+        )}
+        <Modal>
+          <Modal.Open opens={"deleteBookings"}>
+            <Button icon={<HiTrash />} disabled={isDeleting}>
+              Delete
+            </Button>
+          </Modal.Open>
+          <Modal.Window name={"deleteBookings"}>
+            <ConfirmDelete
+              resourceName={"booking"}
+              onConfirm={() => {
+                deleteBooking(bookingId);
+              }}
+            />
+          </Modal.Window>
+        </Modal>
+
+        {status === "checked-in" && (
+          <Button
+            disabled={isCheckingOut}
+            icon={<HiArrowUpOnSquare />}
+            onClick={() => {
+              checkingOut(bookingId);
+            }}
+          >
+            check out
           </Button>
         )}
       </ButtonGroup>

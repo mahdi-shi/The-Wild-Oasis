@@ -14,4 +14,4 @@ function useSettings() {
   return { isLoading, error, Settings };
 }
 
-export default useSettings;
+export default useSettings
