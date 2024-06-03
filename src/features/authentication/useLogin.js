@@ -7,10 +7,10 @@ export function useLogin() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { isPending : isLoading, mutate: LoginData } = useMutation({
+  const { isPending: isLoading, mutate: LoginData } = useMutation({
     mutationFn: ({ email, password }) => Login({ email, password }),
     onSuccess: (user) => {
-      queryClient.setQueriesData(["user"], user);
+      queryClient.setQueryData(["user"], user.user);
       navigate("/dashboard");
     },
     onError: (err) => {
