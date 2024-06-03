@@ -21,6 +21,14 @@ const Heading = styled.h1`
       font-size: 1.2em;
       font-weight: 300;
     `}
+
+${(props) =>
+    props.as === "h4" &&
+    css`
+      font-size: 2.8em;
+      font-weight: 300;
+      text-align: center;
+    `}
  
   font-family: sans-serif;
   text-shadow: 0px 10px 10px rgb(0, 0, 0, 0.5);
