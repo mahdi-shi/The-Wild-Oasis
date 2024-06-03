@@ -10,9 +10,19 @@ function LoginForm() {
   const [password, setPassword] = useState("123456");
   const { LoginData, isLoading } = useLogin();
 
+  console.log(isLoading);
+
   function handleSubmit(e) {
     e.preventDefault();
-    LoginData({ email, password });
+    LoginData(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail("");
+          setPassword("");
+        },
+      }
+    );
 
     if (!email || !password) return;
   }
