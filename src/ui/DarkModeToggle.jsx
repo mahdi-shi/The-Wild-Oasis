@@ -4,8 +4,6 @@ import ButtonIcon from "./ButtonIcon";
 
 function DarkModeToggle() {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
-  console.log(isDarkMode);
-  console.log(DarkModeToggle);
   return (
     <ButtonIcon onClick={toggleDarkMode}>
       {!isDarkMode ? <HiOutlineMoon /> : <HiOutlineSun />}
