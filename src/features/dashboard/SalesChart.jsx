@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import DashboardBox from "./DashboardBox";
-import { BiHeading } from "react-icons/bi";
+import Heading from "../../ui/Heading";
 import { useDarkMode } from "../../Contexts/DarkModeContext";
 import {
   Area,
@@ -24,7 +24,6 @@ const StyledSalesChart = styled(DashboardBox)`
   }
 `;
 
-
 function SalesChart({ bookings, numDays }) {
   const { isDarkMode } = useDarkMode();
 
@@ -45,7 +44,6 @@ function SalesChart({ bookings, numDays }) {
     };
   });
 
-
   const colors = isDarkMode
     ? {
         totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
@@ -62,7 +60,10 @@ function SalesChart({ bookings, numDays }) {
 
   return (
     <StyledSalesChart>
-      <BiHeading as="h2">Sales</BiHeading>
+      <Heading as="h2">
+        Sales from {format(allDates.at(0), "MMM dd yyyy")} &mdash;{" "}
+        {format(allDates.at(-1), "MMM dd yyyy")}
+      </Heading>
 
       <ResponsiveContainer height={317} width="100%">
         <AreaChart data={data}>
