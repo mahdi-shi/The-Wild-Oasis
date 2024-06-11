@@ -114,17 +114,22 @@ html {
   font-size: 62.5%;
   margin: 0;
   padding: 0;
-  
+  height: 101vh ;
 }
 
 body {
   font-family: "Poppins", sans-serif;
   color: var(--color-grey-700);
-
   transition: color 0.3s, background-color 0.3s;
   min-height: 100vh;
   line-height: 1.5;
+  margin-top: 10px;
+  margin-left: 0px;
+  margin-right:6px;
+  height: 10vh;
+  margin-bottom:30px;
   font-size: 1.6rem;
+  overflow: hidden
 }
 
 input,

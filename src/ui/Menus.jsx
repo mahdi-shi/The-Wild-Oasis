@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
-import {useCloseModal} from "../hooks/useCloseModal";
+import { useCloseModal } from "../hooks/useCloseModal";
 
 const Menu = styled.div`
   display: flex;
@@ -88,6 +88,8 @@ function Toggle({ id }) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
 
   function handleClick(e) {
+    e.stopPropagation();
+
     openId === "" || openId !== id ? open(id) : close();
 
     const rect = e.target.closest("button").getBoundingClientRect();
@@ -106,7 +108,7 @@ function Toggle({ id }) {
 function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext);
 
-  const ref = useCloseModal(close);
+  const ref = useCloseModal(close, false);
   if (openId !== id) return null;
 
   return createPortal(

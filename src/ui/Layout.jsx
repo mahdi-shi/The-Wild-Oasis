@@ -6,8 +6,24 @@ import styled from "styled-components";
 const StyledMain = styled.main`
   background-color: var(--color-grey-50);
   padding: 4rem 4.8rem 6.4rem;
-  
-  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background:var(--color-grey-0);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background:var(--color-grey-200);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background:var(--color-grey-50);
+  }
+
+  overflow-y: scroll;
 `;
 
 const StyledAppLayout = styled.div`

@@ -21,4 +21,3 @@ export function useCloseModal(handler, listenCapturing = true) {
 
   return ref;
 }
-
