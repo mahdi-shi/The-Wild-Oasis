@@ -1,4 +1,8 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
+import GlobalStyled from "../styles/GlobalStyled";
+import Heading from "./Heading";
+import Button from "./Button";
 
 const StyledErrorFallback = styled.main`
   height: 100vh;
@@ -6,6 +10,7 @@ const StyledErrorFallback = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 4.8rem;
 `;
 
@@ -29,3 +34,25 @@ const Box = styled.div`
     color: var(--color-grey-500);
   }
 `;
+
+function ErrorFallback({ error, resetErrorBoundary }) {
+  return (
+    <>
+      <GlobalStyled />
+      <StyledErrorFallback>
+        <Box>
+          <Heading as="h2">Something went wrong with the server !</Heading>
+          <p>{error.message}</p>
+          <Button size="large" onClick={resetErrorBoundary}>Try again</Button>
+        </Box>
+      </StyledErrorFallback>
+    </>
+  );
+}
+
+export default ErrorFallback;
+
+ErrorFallback.propTypes = {
+  error: PropTypes.node,
+  resetErrorBoundary: PropTypes.node,
+};
