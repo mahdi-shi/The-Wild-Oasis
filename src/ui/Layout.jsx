@@ -23,7 +23,7 @@ const StyledMain = styled.main`
     background:var(--color-grey-50);
   }
 
-  height: 100vh;
+  height: 90vh;
 
   overflow-y: scroll;
 `;
