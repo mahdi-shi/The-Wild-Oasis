@@ -133,7 +133,6 @@ body {
   margin-top: 0px;
   margin-left: 0px;
   margin-right:6px;
-  height: 10vh;
   margin-bottom:30px;
   font-size: 1.6rem;
   overflow: hidden
