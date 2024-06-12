@@ -115,6 +115,13 @@ html {
   margin: 0;
   padding: 0;
   height: 101vh ;
+  width: 100.5%;
+}
+
+@media only screen and (max-width: 1100px) {
+  html {
+    width: 101%;
+  }
 }
 
 body {
