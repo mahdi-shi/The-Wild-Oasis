@@ -23,6 +23,8 @@ const StyledMain = styled.main`
     background:var(--color-grey-50);
   }
 
+  height: 74vh;
+
   overflow-y: scroll;
 `;
 

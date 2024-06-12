@@ -123,7 +123,7 @@ body {
   transition: color 0.3s, background-color 0.3s;
   min-height: 100vh;
   line-height: 1.5;
-  margin-top: 10px;
+  margin-top: 0px;
   margin-left: 0px;
   margin-right:6px;
   height: 10vh;
