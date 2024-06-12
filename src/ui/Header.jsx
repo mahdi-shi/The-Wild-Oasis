@@ -10,6 +10,7 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   gap: 2.7rem;
   align-items: center;
+  margin-top: 30px;
 `;
 
 function Header() {
