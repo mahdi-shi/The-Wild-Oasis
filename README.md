@@ -9,3 +9,4 @@ Currently, two official plugins are available:
 
 
  Demo Production with vercel : [The-Wild-Oasis](https://the-wild-oasis-mahdis-projects-b0760c40.vercel.app)
+ {demo authentication => email-address : {test@gmail.com} password : {test}}
